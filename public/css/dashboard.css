@@ -1,0 +1,125 @@
+@import url("main.css");
+
+.personal_data {
+    margin: 20px auto;
+    padding: 20px;
+    width: 50%;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.personal_data p {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 18px;
+    margin: 15px 0; /* Увеличим отступы между строками */
+}
+
+.personal_data strong {
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    width: 25%;
+    
+}
+
+.personal_data span {
+    width: 50%;
+    text-align: left;
+}
+
+.personal_data button {
+    width: 25%;
+    padding: 8px 20px; /* Увеличим padding для лучшего визуального восприятия */
+}
+
+#gender-text,
+#birth-date-text {
+    font-size: 18px;
+    color: #444;
+}
+
+#edit-gender-btn,
+#edit-birth-date-btn {
+    background-color: #2575fc;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#edit-gender-btn:hover,
+#edit-birth-date-btn:hover {
+    background-color: #ff6b6b;
+}
+
+table {
+    width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #444;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #2575fc;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+button.cancel-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button.cancel-btn:hover {
+    background-color: #ff3b3b;
+}
+
+input[type="date"] {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+}
+
+button {
+    background-color: #2575fc;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0; /* Убрали отступы по бокам */
+}
+
+button:hover {
+    background-color: #ff6b6b;
+}
+
+button:active {
+    background-color: #ff3b3b;
+}

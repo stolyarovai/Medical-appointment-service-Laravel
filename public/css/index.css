@@ -1,0 +1,105 @@
+@import url("main.css");
+
+#carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#carousel-container {
+    display: flex;
+    width: 80%;
+    justify-content: center; /* Центрируем карточки */
+    align-items: center; /* Выравниваем по вертикали */
+    gap: 20px; /* Отступ между карточками */
+}
+
+.doctor-card {
+    flex: 0 0 30%; /* Ширина карточки */
+    text-align: center;
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.doctor-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #2575fc;
+    transition: border-color 0.3s ease;
+}
+
+.doctor-img:hover {
+    border-color: #ff6b6b;
+}
+
+.doctor-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3b0077;
+    margin-bottom: 10px;
+}
+
+.doctor-specialty {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.appoint-doctor {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #2575fc, #3b0077);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.appoint-doctor:hover {
+    background: linear-gradient(to right, #ff6b6b, #2575fc);
+    transform: scale(1.05);
+}
+
+#prev, #next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(59, 0, 119, 0.8);
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#prev:hover, #next:hover {
+    background: rgba(255, 107, 107, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+#prev {
+    left: 10px;
+}
+
+#next {
+    right: 10px;
+}

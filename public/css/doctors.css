@@ -1,0 +1,213 @@
+@import url("main.css");
+
+/* Стили для формы добавления врача для администратора */
+#newDoctor {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#newDoctor:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+#newDoctor .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#newDoctor label {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-right: 15px;
+    display: inline-block;
+    width: 150px; /* Устанавливаем фиксированную ширину для лейблов */
+}
+
+#newDoctor input[type="text"], #newDoctor input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#newDoctor input[type="submit"] {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    width: 100%;
+}
+
+#newDoctor input[type="submit"]:hover {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#newDoctor .error {
+    color: #ff6b6b;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Стили для файлового input */
+#newDoctor .file-input-container {
+    position: relative;
+    display: inline-block;
+}
+
+#newDoctor input[type="file"] {
+    display: none; /* Скрыть стандартный input */
+}
+
+#newDoctor label[for="profilePicture"] {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+    width: auto;
+}
+
+#newDoctor label[for="profilePicture"]:hover {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для списка врачей */
+#doctorsList {
+    margin: auto;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    text-align: center;
+    max-width: 800px;
+}
+
+.doctor-item {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.doctor-item img.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 3px solid #2575fc;
+    transition: border-color 0.3s ease;
+}
+
+.doctor-item img.profile-picture:hover {
+    border-color: #6a11cb;
+}
+
+.doctor-item .doctor-info {
+    flex: 1;
+}
+
+.doctor-item .doctor-info p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Кнопки для записи на приём и удаления врача */
+.doctor-item a.appoint-doctor {
+    display: inline-block;
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-item a.appoint-doctor:hover {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.doctor-item button.delete-doctor {
+    background: linear-gradient(to right, #ff6b6b, #ff4040);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.doctor-item button.delete-doctor:hover {
+    background: linear-gradient(to right, #ff4040, #ff6b6b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+}
+
+.doctor-item button.-doctor {
+    background: linear-gradient(to right, #ff6b6b, #ff4040);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-left: 10px;
+}
+
+.doctor-item button.-doctor:hover {
+    background: linear-gradient(to right, #ff4040, #ff6b6b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+}
+
+/* Для текстовых сообщений */
+.text_message {
+    color: #555;
+    font-size: 16px;
+    font-weight: bold;
+}

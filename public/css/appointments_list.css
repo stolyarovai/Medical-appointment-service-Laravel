@@ -1,0 +1,49 @@
+@import url("main.css");
+
+#appointmentsList {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 900px;
+    text-align: left;
+}
+
+.appointment-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.appointment-item:hover {
+    background-color: #f1f1f1;
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-info p {
+    margin: 5px 0;
+}
+
+.appointment-info strong {
+    color: #333;
+}
+
+button#deleteAllButton {
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button#deleteAllButton:hover {
+    background-color: #d14a4a;
+}
