@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -16,24 +18,46 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'login'    => 'required|string',
+        $request->validate([
+            'login'    => 'required|string|email',
             'password' => 'required|string',
         ]);
 
-        $field = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) 
-                 ? 'email' 
-                 : 'full_name'; 
+        $key = Str::lower($request->input('login')).'|'.$request->ip();
+        $maxAttempts = 3;
+        $decaySeconds = 60;
 
-        if (Auth::attempt([$field => $credentials['login'], 'password' => $credentials['password']], $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('dashboard'));
+        if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+            $seconds = RateLimiter::availableIn($key);
+            return response()->json([
+                'success' => false,
+                'error'   => "Превышено количество попыток. Попробуйте снова через $seconds секунд."
+            ], 429);
         }
 
-        return back()
-            ->withErrors(['login' => 'Неверный логин или пароль'])
-            ->withInput($request->only('login'));
+        if (Auth::attempt(['email' => $request->login, 'password' => $request->password])) {
+            RateLimiter::clear($key);
+
+            $user = Auth::user();
+
+            $redirect = session()->pull('url.intended', 
+                $user->role === 'admin' 
+                    ? route('home') 
+                    : route('dashboard')
+            );
+
+            return response()->json([
+                'success'       => true,
+                'redirect_from' => $redirect,
+            ]);
+        }
+
+        RateLimiter::hit($key, $decaySeconds);
+
+        return response()->json([
+            'success' => false,
+            'error'   => 'Неверный логин или пароль',
+        ], 401);
     }
 
     public function logout(Request $request)
