@@ -1,7 +1,6 @@
 @extends('layouts.form')
 
 @section('content')
-    {{-- ФИО --}}
     <div class="form-group">
         <label for="fullName">ФИО</label>
         <input type="text"
@@ -15,7 +14,6 @@
         @enderror
     </div>
 
-    {{-- Email --}}
     <div class="form-group">
         <label for="email">E-mail</label>
         <input type="email"
@@ -29,7 +27,6 @@
         @enderror
     </div>
 
-    {{-- Пароль --}}
     <div class="form-group">
         <label for="password">Пароль</label>
         <input type="password"
@@ -42,7 +39,6 @@
         @enderror
     </div>
 
-    {{-- Подтверждение пароля --}}
     <div class="form-group">
         <label for="password_confirmation">Подтверждение пароля</label>
         <input type="password"

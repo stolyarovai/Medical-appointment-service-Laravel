@@ -1,7 +1,6 @@
 @extends('layouts.form')
 
 @section('content')
-    {{-- Логин --}}
     <div class="form-group">
         <label for="login">Логин</label>
         <input type="text"
@@ -16,7 +15,6 @@
         @enderror
     </div>
 
-    {{-- Пароль --}}
     <div class="form-group">
         <label for="password">Пароль</label>
         <input type="password"
@@ -29,7 +27,6 @@
         @enderror
     </div>
 
-    {{-- Запомнить --}}
     <div class="form-group">
         <label>
             <input type="checkbox" name="remember">
@@ -37,7 +34,6 @@
         </label>
     </div>
 
-    {{-- Кнопка --}}
     <button type="submit" id="submitButton">Войти</button>
 
     <p>Нет аккаунта? <a href="{{ route('register') }}">Регистрация</a></p>

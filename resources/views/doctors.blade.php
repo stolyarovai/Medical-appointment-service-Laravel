@@ -9,7 +9,6 @@
         <div class="alert alert-success">{{ session('status') }}</div>
     @endif
 
-    {{-- Форма добавления для админа --}}
     @if(auth()->check() && auth()->user()->role === 'admin')
         <form id="newDoctor"
               method="POST"
@@ -49,7 +48,6 @@
         </form>
     @endif
 
-    {{-- Список врачей --}}
     <div id="doctorsList">
         @forelse($doctors as $doctor)
             @include('partials.doctor-item', ['doctor' => $doctor])
