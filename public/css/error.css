@@ -1,16 +1,16 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: linear-gradient(270deg, #2575fc, #6a11cb, #3b0077);
     background-size: 400% 400%;
     animation: gradientBG 10s ease infinite;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    color: white;
+    text-align: center;
 }
 
 @keyframes gradientBG {
@@ -31,40 +31,84 @@ body {
     }
 }
 
-h1, h2, p {
-    animation: shadowAnimation 5s ease-in-out infinite;
-}
-
 h1 {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 30px;
 }
 
 h1 a {
-    text-decoration: none;
-    font-weight: bold;
     color: white;
+    text-decoration: none;
+    font-size: 2.5rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    animation: shadowAnimation 5s ease-in-out infinite;
 }
 
 h1 a:hover {
-    text-shadow: 0 0 25px black;
     color: #ff6b6b;
+    text-shadow: 0 0 25px black;
 }
 
-h2.error-message {
+.error-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 0 50px black;
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-out;
+    border: 5px solid #ff6b6b;
+}
+
+.error-code {
     font-size: 6rem;
     font-weight: bold;
-    text-align: left;
-    width: 90%;
-    max-width: 1200px;
+    color: #ff6b6b;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 2px 2px 0 #3b0077;
 }
 
-p {
-    font-size: 1rem;
-    font-weight: bold;
+.error-message {
+    font-size: 1.5rem;
+    color: #3b0077;
+    margin: 20px 0 30px;
+}
 
+.error-description {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.back-home {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(to right, #2575fc, #3b0077);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(37, 117, 252, 0.3);
+}
+
+.back-home:hover {
+    background: linear-gradient(to right, #3b0077, #2575fc);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 117, 252, 0.4);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

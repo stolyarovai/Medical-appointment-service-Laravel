@@ -1,23 +1,16 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: linear-gradient(270deg, #2575fc, #6a11cb, #3b0077);
     background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;}
-
-form {
-    margin: auto;
-    border: 5px solid #ff6b6b;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 0 50px black;
-    box-sizing: border-box;
+    animation: gradientBG 10s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
- 
+
 @keyframes gradientBG {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -36,90 +29,121 @@ form {
     }
 }
 
-h1 {
-    margin-top: 2%;
-    text-align: center;
-    color: #333;
-    animation: shadowAnimation 10s ease-in-out infinite;
+.form-container {
+    max-width: 600px;
+    width: 100%;
 }
 
-h1 a {
+.brand-link {
     color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.8rem;
+    transition: color 0.3s ease;
+    animation: shadowAnimation 5s ease-in-out infinite;
 }
 
-h1 a:hover {
+.brand-link:hover {
+    color: #ff6b6b;
+    text-decoration: none;
     text-shadow: 0 0 25px black;
 }
 
-a:hover {
-    color: #ff6b6b;
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px black;
+    border: 5px solid #ff6b6b;
 }
 
-a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-h2 {
-    color: #333;
+.form-title {
+    color: #3b0077;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-weight: 600;
 }
 
-p {
-    text-align: center;
-}
-
-p a {
-    color: grey;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.form-group input {
+input, select, textarea {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
     border-radius: 5px;
-    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.form-group input:focus {
-    border-color: #2575fc;
+input:focus, select:focus, textarea:focus {
     outline: none;
+    border-color: #2575fc;
+    box-shadow: 0 0 0 0.2rem rgba(37, 117, 252, 0.25);
+}
+
+label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+    display: block;
+}
+
+button {
+    background: linear-gradient(to right, #2575fc, #3b0077);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(to right, #3b0077, #2575fc);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 117, 252, 0.3);
 }
 
 .error {
-    color: red;
+    color: #dc3545;
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: -15px;
+    margin-bottom: 15px;
 }
 
-input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-    color: white;
-    background-color: #2575fc;
-    border: 0px solid;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    box-sizing: border-box;
-    margin-bottom: 5px;
+.form-group {
+    margin-bottom: 20px;
 }
 
-input[type="submit"]:hover {
-    background-color: #6a11cb;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+a {
+    color: #2575fc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #3b0077;
+    text-decoration: underline;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-check input {
+    width: auto;
+    margin-right: 10px;
+}
+
+.form-check label {
+    margin-bottom: 0;
 }
