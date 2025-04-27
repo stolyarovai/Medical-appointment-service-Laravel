@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -28,13 +27,14 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $data = $request->validate([
             'field' => 'required|string|in:gender,birth_date',
             'value' => [
                 'required',
-                function($attr, $value, $fail) use ($request) {
+                function ($attr, $value, $fail) use ($request) {
                     if ($request->field === 'birth_date') {
                         if (! preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) ||
                             strtotime($value) > time()) {
@@ -45,14 +45,16 @@ class UserController extends Controller
                         ! in_array($value, ['male','female','undetermined'])) {
                         $fail('Недопустимое значение для пола.');
                     }
-                }
+                },
             ],
         ]);
 
         $user->{$data['field']} = $data['value'];
+
         if ($user->save()) {
             return response()->json(['success' => true]);
         }
+
         return response()->json([
             'success' => false,
             'error'   => 'Не удалось обновить данные.'
