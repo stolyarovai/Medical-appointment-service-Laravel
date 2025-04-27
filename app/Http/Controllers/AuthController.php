@@ -31,50 +31,61 @@ class AuthController extends Controller
         ]);
     }
 
-
     public function login(Request $request)
     {
-        $request->validate([
-            'login'    => 'required|string|email',
+        $credentials = $request->validate([
+            'email'    => 'required|string|email',
             'password' => 'required|string',
         ]);
 
-        $key = Str::lower($request->input('login')).'|'.$request->ip();
+        $key = Str::lower($request->input('email')).'|'.$request->ip();
         $maxAttempts = 3;
         $decaySeconds = 60;
 
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
             $seconds = RateLimiter::availableIn($key);
-            return response()->json([
-                'success' => false,
-                'error'   => "Превышено количество попыток. Попробуйте снова через $seconds секунд."
-            ], 429);
+            
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'error'   => "Превышено количество попыток. Попробуйте снова через $seconds секунд."
+                ]);
+            }
+            
+            return back()->with('error', "Превышено количество попыток. Попробуйте снова через $seconds секунд.")->withInput();
         }
 
-        if (Auth::attempt(['email' => $request->login, 'password' => $request->password])) {
+        if (Auth::attempt($credentials)) {
             RateLimiter::clear($key);
             $request->session()->regenerate();
 
             $user = Auth::user();
-
             $redirect = session()->pull('url.intended', 
                 $user->role === 'admin' 
                     ? route('home') 
                     : route('dashboard')
             );
 
-            return response()->json([
-                'success'       => true,
-                'redirect_from' => $redirect,
-            ]);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success'       => true,
+                    'redirect_from' => $redirect,
+                ]);
+            }
+            
+            return redirect($redirect);
         }
 
         RateLimiter::hit($key, $decaySeconds);
 
-        return response()->json([
-            'success' => false,
-            'error'   => 'Неверный логин или пароль',
-        ], 401);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => false,
+                'error'   => 'Неверный логин или пароль',
+            ]);
+        }
+        
+        return back()->with('error', 'Неверный логин или пароль')->withInput();
     }
 
     public function logout(Request $request)
@@ -92,11 +103,11 @@ class AuthController extends Controller
             'email'           => 'required|string|email|max:255|unique:users,email',
             'password'        => 'required|string|min:6|confirmed',
         ]);
-
+        
         $user = User::create([
             'full_name'     => $data['fullName'],
             'email'         => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password'      => $data['password'],
         ]);
 
         Auth::login($user);
