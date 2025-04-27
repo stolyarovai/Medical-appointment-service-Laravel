@@ -18,10 +18,16 @@
                     <div class="appointment-info">
                         <p><strong>Пациент:</strong> {{ $appt->user->full_name }}</p>
                         <p><strong>Врач:</strong> {{ $appt->doctor->full_name }}</p>
-                        <p><strong>Дата:</strong> {{ $appt->appointment_date->format('Y-m-d') }}</p>
-                        <p><strong>Время:</strong> {{ $appt->appointment_time }}</p>
+                        <p><strong>Дата:</strong> {{ $appt->appointment_date->format('d.m.Y') }}</p>
+                        <p><strong>Время:</strong> {{ $appt->appointment_date->format('H:i') }}</p>
                         <p><strong>Статус:</strong>
-                            {{ $appt->status === 'active' ? 'Активно' : 'Отменено' }}
+                            @if ($appt->status === 'scheduled')
+                                Запланировано
+                            @elseif ($appt->status === 'completed')
+                                Завершено
+                            @else
+                                Отменено
+                            @endif
                         </p>
                     </div>
                 </div>
@@ -31,7 +37,7 @@
         <form method="POST" action="{{ route('appointments.destroyAll') }}" id="deleteAllForm">
             @csrf
             @method('DELETE')
-            <button type="submit" id="deleteAllButton">Удалить все назначения</button>
+            <button type="submit" id="deleteAllButton" onclick="return confirm('Вы уверены, что хотите удалить все назначения?')">Удалить все назначения</button>
         </form>
     @endif
 @endsection

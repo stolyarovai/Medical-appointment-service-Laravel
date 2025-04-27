@@ -10,12 +10,12 @@
     <div class="personal_data">
         <p>
             <strong>Пол:</strong>
-            {{ $user->gender === 'male' ? 'Мужской' : ($user->gender === 'female' ? 'Женский' : 'Не определён') }}
+            <span id="gender-text">{{ $user->gender === 'male' ? 'Мужской' : ($user->gender === 'female' ? 'Женский' : 'Не указан') }}</span>
             <button id="edit-gender-btn">Изменить</button>
         </p>
         <p>
             <strong>Дата рождения:</strong>
-            <span id="birth-date-text">{{ $birth }}</span>
+            <span id="birth-date-text" data-date="{{ $user->birth_date ?? '' }}">{{ $birth ?? 'Не указана' }}</span>
             <button id="edit-birth-date-btn">Изменить</button>
         </p>
         <p>
@@ -39,8 +39,8 @@
             <tbody>
             @foreach($active as $appt)
                 <tr data-id="{{ $appt->id }}">
-                    <td>{{ $appt->appointment_date->format('Y-m-d') }}</td>
-                    <td>{{ $appt->appointment_time }}</td>
+                    <td>{{ $appt->appointment_date->format('d.m.Y') }}</td>
+                    <td>{{ $appt->appointment_date->format('H:i') }}</td>
                     <td>{{ $appt->doctor->full_name }}</td>
                     <td>
                         <button class="cancel-btn" data-id="{{ $appt->id }}">Отменить</button>
@@ -61,14 +61,16 @@
                     <th>Дата</th>
                     <th>Время</th>
                     <th>Врач</th>
+                    <th>Статус</th>
                 </tr>
             </thead>
             <tbody>
             @foreach($old as $appt)
                 <tr>
-                    <td>{{ $appt->appointment_date->format('Y-m-d') }}</td>
-                    <td>{{ $appt->appointment_time }}</td>
+                    <td>{{ $appt->appointment_date->format('d.m.Y') }}</td>
+                    <td>{{ $appt->appointment_date->format('H:i') }}</td>
                     <td>{{ $appt->doctor->full_name }}</td>
+                    <td>{{ $appt->status === 'completed' ? 'Завершена' : 'Отменена' }}</td>
                 </tr>
             @endforeach
             </tbody>

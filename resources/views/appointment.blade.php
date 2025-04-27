@@ -7,15 +7,15 @@
 @section('content')
     <h1>Запись к врачу</h1>
 
-    <img class="doctor-image" src="{{ asset('profile_pictures/' . $doctor->profile_picture) }}"
+    <img class="doctor-image" src="{{ $doctor->profile_picture ? asset('storage/'.$doctor->profile_picture) : asset('images/none.png') }}"
          alt="Фото врача {{ $doctor->full_name }}">
 
-    <p><b>{{ $doctor->specialty }}</b> {{ $doctor->full_name }}</p>
+    <p><b>{{ $doctor->specialty ?: $doctor->specialization }}</b> {{ $doctor->full_name }}</p>
 
     <form id="appointment-form">
         @csrf {{-- Laravel‑токен --}}
         <label for="date">Дата:</label>
-        <input type="date" name="date" id="date">
+        <input type="date" name="date" id="date" min="{{ date('Y-m-d') }}">
 
         <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
     </form>

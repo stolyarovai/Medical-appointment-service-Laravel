@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("newDoctor");
     const doctorsList = document.getElementById("doctorsList");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const fullNameField = document.getElementById("fullName");
     const specialityField = document.getElementById("speciality");
@@ -12,64 +13,73 @@ document.addEventListener("DOMContentLoaded", () => {
     const generalError = document.getElementById("Error");
 
     function displayError(field, message) {
-        field.textContent = message;
+        if (field) field.textContent = message;
     }
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+    if (form) {
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-        [fullNameError, specialityError, profilePictureError, generalError].forEach((field) => {
-            displayError(field, "");
-        });
-
-        const formData = new FormData();
-        formData.append("fullName", fullNameField.value.trim());
-        formData.append("speciality", specialityField.value.trim());
-        if (profilePictureField.files[0]) {
-            formData.append("profilePicture", profilePictureField.files[0]);
-        }
-
-        try {
-            const response = await fetch("../actions/add_doctor.php", {
-                method: "POST",
-                body: formData,
+            const errorFields = [fullNameError, specialityError, profilePictureError, generalError];
+            errorFields.forEach((field) => {
+                if (field) displayError(field, "");
             });
 
-            const data = await response.json();
+            const formData = new FormData(form);
 
-            if (data.success) {
-                location.reload();
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.html) {
+                        if (doctorsList) {
+                            doctorsList.insertAdjacentHTML('beforeend', data.html);
+                            form.reset();
+                        } else {
+                            location.reload();
+                        }
+                    } else {
+                        location.reload();
+                    }
+                } 
+                else {
+                    displayError(generalError, data.error || "Ошибка добавления врача.");
+                }
             } 
-            else {
-                displayError(generalError, data.error || "Ошибка добавления врача.");
+            catch (error) {
+                displayError(generalError, "Произошла ошибка. Попробуйте позже.");
             }
-        } 
-        catch (error) {
-            displayError(generalError, "Произошла ошибка. Попробуйте позже.");
-        }
-    });
+        });
+    }
 
-    const deleteDoctorButtons = document.querySelectorAll(".-doctor");
-
-    deleteDoctorButtons.forEach(button => {
-        button.addEventListener("click", async () => {
-            const doctorId = button.getAttribute("data-id");
-
+    document.addEventListener('click', async function(e) {
+        if (e.target && e.target.classList.contains('-doctor')) {
+            const doctorId = e.target.getAttribute("data-id");
+            
             if (confirm("Вы уверены, что хотите удалить этого врача?")) {
                 try {
-                    const response = await fetch("../actions/delete_doctor.php", {
-                        method: "POST",
+                    const response = await fetch(`/doctors/${doctorId}`, {
+                        method: "DELETE",
                         headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ id: doctorId })
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
                     });
 
                     const data = await response.json();
 
                     if (data.success) {
                         const doctorItem = document.querySelector(`.doctor-item[data-id="${doctorId}"]`);
-                        doctorItem.remove();
+                        if (doctorItem) doctorItem.remove();
                     } 
                     else {
                         alert("Ошибка при удалении врача.");
@@ -79,14 +89,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("Произошла ошибка. Попробуйте позже.");
                 }
             }
-        });
+        }
     });
 
-    const avatarElements = document.querySelectorAll(".profile-picture");
-
-    avatarElements.forEach(img => {
-        img.addEventListener("click", () => {
-            const doctorId = img.closest(".doctor-item").getAttribute("data-id");
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('profile-picture')) {
+            const doctorItem = e.target.closest(".doctor-item");
+            if (!doctorItem) return;
+            
+            const doctorId = doctorItem.getAttribute("data-id");
             const fileInput = document.createElement("input");
             fileInput.type = "file";
             fileInput.accept = "image/*";
@@ -95,17 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 const file = fileInput.files[0];
                 if (file) {
                     const formData = new FormData();
-                    formData.append("doctorId", doctorId);
                     formData.append("profilePicture", file);
 
-                    fetch("../actions/alter_icon.php", {
+                    fetch(`/doctors/${doctorId}/icon`, {
                         method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
                         body: formData,
                     })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            img.src = `/servis/profile_pictures/${data.newProfilePicture}`;
+                            e.target.src = data.newProfilePicture;
                         } 
                         else {
                             alert("Ошибка при изменении фото.");
@@ -118,6 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             fileInput.click();
-        });
+        }
     });
-});
+}); 

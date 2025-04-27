@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Будь здоров!'),
 
     'env' => env('APP_ENV', 'production'),
 
@@ -9,13 +9,13 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Moscow',
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => 'ru',
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'fallback_locale' => 'en',
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'faker_locale' => 'ru_RU',
 
     'cipher' => 'AES-256-CBC',
 
@@ -28,7 +28,7 @@ return [
     ],
 
     'maintenance' => [
-        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'driver' => 'file',
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 ];

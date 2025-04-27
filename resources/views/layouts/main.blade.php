@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('styles/' . View::getSection('style') . '.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/' . View::getSection('style') . '.css') }}">
     <title>@yield('title')</title>
 </head>
 <body data-logged-in="{{ auth()->check() ? 'true' : 'false' }}">
     <header>
         <div class="header-left">
-            <a href="{{ route('dashboard') }}">Будь здоров!</a>
+            <a href="{{ route('home') }}">Будь здоров!</a>
             @auth
                 <span id="userName">{{ auth()->user()->role === 'admin' ? 'Администратор' : auth()->user()->full_name }}</span>
             @else
@@ -50,6 +50,6 @@
         <p><b>&copy; 2025 Будь здоров!</b></p>
     </footer>
 
-    <script src="{{ asset('javascript/' . View::getSection('script') . '.js') }}"></script>
+    <script src="{{ asset('js/' . View::getSection('script') . '.js') }}"></script>
 </body>
 </html>

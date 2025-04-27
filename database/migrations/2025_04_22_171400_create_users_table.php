@@ -14,8 +14,9 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female', 'undetermined'])->default('undetermined');
             $table->date('birth_date')->nullable();
             $table->string('email')->unique();
-            $table->string('password_hash');
+            $table->string('password');
             $table->enum('role', ['user', 'admin'])->default('user');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

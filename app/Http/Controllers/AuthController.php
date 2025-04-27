@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('login');
     }
 
     public function login(Request $request)
@@ -37,6 +37,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->login, 'password' => $request->password])) {
             RateLimiter::clear($key);
+            $request->session()->regenerate();
 
             $user = Auth::user();
 
@@ -70,7 +71,7 @@ class AuthController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     public function register(Request $request)
@@ -84,7 +85,7 @@ class AuthController extends Controller
         $user = User::create([
             'full_name'     => $data['fullName'],
             'email'         => $data['email'],
-            'password_hash' => Hash::make($data['password']),
+            'password'      => $data['password'],
         ]);
 
         Auth::login($user);

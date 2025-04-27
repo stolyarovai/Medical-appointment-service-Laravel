@@ -21,14 +21,13 @@ class DashboardController extends Controller
 
         $active = Appointment::with('doctor')
             ->where('user_id', $user->id)
-            ->where('status', 'active')
+            ->where('status', 'scheduled')
             ->orderBy('appointment_date')
-            ->orderBy('appointment_time')
             ->get();
 
         $old = Appointment::with('doctor')
             ->where('user_id', $user->id)
-            ->where('status', 'cancelled')
+            ->whereIn('status', ['completed', 'cancelled'])
             ->orderByDesc('appointment_date')
             ->get();
 

@@ -11,10 +11,12 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->string('full_name');
-            $table->string('specialization');
+            $table->string('specialization')->nullable();
+            $table->string('specialty');
             $table->text('bio')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->nullable();
+            $table->string('profile_picture')->default('none.png');
             $table->timestamps();
         });
     }

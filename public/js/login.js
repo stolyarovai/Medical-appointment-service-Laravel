@@ -10,70 +10,87 @@ document.addEventListener("DOMContentLoaded", () => {
     const errorField = document.getElementById("Error");
 
     const loginRegex = /(^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$)|(^admin$)/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    const passwordRegex = /^.{6,}$/;
 
-    let isLoginValid = false;
-    let isPasswordValid = false;
+    let isLoginValid = true;
+    let isPasswordValid = true;
 
     function validateField(field, errorField, regex, errorMessage) {
+        if (!field) return true;
         const value = field.value.trim();
 
         if (!regex.test(value)) {
-            errorField.textContent = errorMessage;
+            if (errorField) errorField.textContent = errorMessage;
             return false;
         } 
         else {
-            errorField.textContent = "";
+            if (errorField) errorField.textContent = "";
             return true;
         }
     }
 
     function toggleSubmitButton() {
-        submitButton.disabled = !(isLoginValid && isPasswordValid);
+        if (submitButton) {
+            submitButton.disabled = !(isLoginValid && isPasswordValid);
+        }
     }
 
-    loginField.addEventListener("input", () => {
-        isLoginValid = validateField(
-            loginField,
-            loginError,
-            loginRegex,
-            "Введите корректный логин"
-        );
-        toggleSubmitButton();
-    });
+    if (loginField && loginError) {
+        loginField.addEventListener("input", () => {
+            isLoginValid = validateField(
+                loginField,
+                loginError,
+                loginRegex,
+                "Введите корректный логин"
+            );
+            toggleSubmitButton();
+        });
+    }
 
-    passwordField.addEventListener("input", () => {
-        isPasswordValid = validateField(
-            passwordField,
-            passwordError,
-            passwordRegex,
-            "Пароль должен содержать минимум 6 символов с буквами разного регистра"
-        );
-        toggleSubmitButton();
-    });
+    if (passwordField && passwordError) {
+        passwordField.addEventListener("input", () => {
+            isPasswordValid = validateField(
+                passwordField,
+                passwordError,
+                passwordRegex,
+                "Пароль должен содержать минимум 6 символов"
+            );
+            toggleSubmitButton();
+        });
+    }
 
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
+    if (form) {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
 
-        if (isLoginValid && isPasswordValid) {
-            const formData = new FormData(form);
+            if (isLoginValid && isPasswordValid) {
+                const formData = new FormData(form);
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            fetch("../actions/authorize.php", {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = data.redirect_from;
-                    } 
-                    else {
-                        errorField.textContent = data.error || "Ошибка авторизации";
-                    }
+                fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: formData
                 })
-                .catch(() => {
-                    errorField.textContent = "Ошибка соединения с сервером";
-                });
-            }
-    });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect_from;
+                        } 
+                        else {
+                            if (errorField) {
+                                errorField.textContent = data.error || "Ошибка авторизации";
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        if (errorField) {
+                            errorField.textContent = "Ошибка соединения с сервером";
+                        }
+                    });
+                }
+        });
+    }
 });
