@@ -7,13 +7,14 @@
         <link rel="stylesheet" href="{{ asset('css/form.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
+    
     <body>
         <h1><a href="{{ route('home') }}">Будь здоров!</a></h1>
 
         <form action="{{ $action }}" method="POST" id="{{ $id }}">
             @csrf
             <h2>{{ $title }}</h2>
-            {!! $content !!}
+            @yield('content')
         </form>
 
         <script src="{{ asset('js/' . $script . '.js') }}"></script>

@@ -13,8 +13,24 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login');
+        return view('login', [
+            'title'  => 'Вход',
+            'action' => route('login.attempt'),
+            'id'     => 'loginForm',
+            'script' => 'login',
+        ]);
     }
+
+    public function showRegistrationForm()
+    {
+        return view('register', [
+            'title'  => 'Регистрация',
+            'action' => route('register.attempt'),
+            'id'     => 'registrationForm',
+            'script' => 'register',
+        ]);
+    }
+
 
     public function login(Request $request)
     {
@@ -67,11 +83,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect(route('home'));
-    }
-
-    public function showRegistrationForm()
-    {
-        return view('register');
     }
 
     public function register(Request $request)
