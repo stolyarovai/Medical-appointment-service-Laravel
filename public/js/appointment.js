@@ -87,7 +87,7 @@ function confirmAppointment(doctorId, date, time, csrfToken) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            window.location.href = data.redirect;
+            window.location.href = data.redirect_from;
         } 
         else {
             alert("Ошибка: " + (data.error || "Не удалось создать запись"));

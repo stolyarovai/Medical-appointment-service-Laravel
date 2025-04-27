@@ -13,4 +13,9 @@ class HomeController extends Controller
             'userName'   => auth()->check() ? auth()->user()->full_name : null,
         ]);
     }
+
+    public function help()
+    {
+        return view('help');
+    }
 }

@@ -19,7 +19,7 @@ class DoctorController extends Controller
     {
         $data = $request->validate([
             'fullName'       => 'required|string|max:255',
-            'speciality'     => 'required|string|max:255',
+            'specialty'     => 'required|string|max:255',
             'profilePicture' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:20480',
         ]);
 
@@ -32,7 +32,7 @@ class DoctorController extends Controller
 
         $doctor = Doctor::create([
             'full_name'       => $data['fullName'],
-            'specialty'       => $data['speciality'],
+            'specialty'       => $data['specialty'],
             'profile_picture' => $path,
         ]);
 

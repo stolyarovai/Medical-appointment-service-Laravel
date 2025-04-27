@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::where('role', 'user')
+                    ->orderBy('full_name')
+                    ->get();
+
+        return view('users', [
+            'users' => $users
+        ]);
+    }
+
     public function destroy(User $user)
     {
         $user->delete();

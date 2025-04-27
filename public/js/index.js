@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let currentIndex = 0;
 
     async function fetchDoctors() {
-        const response = await fetch("../actions/get_doctors.php");
+        const response = await fetch("/doctors/json");
         doctors = await response.json();
         if (doctors.length > 0) {
             currentIndex = 0;
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (isLoggedIn) {
                 const link = document.createElement("a");
-                link.href = `appointment.php?id=${doctor.id}`;
+                link.href = `/appointment/${doctor.id}`;
                 link.className = "appoint-doctor";
                 link.textContent = "Записаться";
                 card.appendChild(link);

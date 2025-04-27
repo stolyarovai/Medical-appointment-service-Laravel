@@ -7,7 +7,7 @@
         <p>{{ $doctor->specialty ?: $doctor->specialization }}</p>
         <a href="{{ route('appointment.show', $doctor) }}" class="btn">Записаться на приём</a>
         @if(auth()->check() && auth()->user()->role === 'admin')
-            <button class="-doctor" data-id="{{ $doctor->id }}">Удалить</button>
+            <button class="delete-doctor" data-id="{{ $doctor->id }}">Удалить</button>
         @endif
     </div>
 </div> 

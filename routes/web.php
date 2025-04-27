@@ -8,16 +8,17 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/doctors/json', [DoctorController::class, 'all'])->name('doctors.all');
+Route::post('/validate-email', [UserController::class, 'validateEmail'])->name('validate.email');
+Route::get('/help', [HomeController::class, 'help'])->name('help');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
     Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.attempt');
 });
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/doctors/json', [DoctorController::class, 'all'])->name('doctors.all');
-Route::post('/validate-email', [UserController::class, 'validateEmail'])->name('validate.email');
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -34,7 +35,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/doctors/{doctor}/icon', [DoctorController::class, 'updateIcon'])->name('doctors.updateIcon');
         Route::delete('/doctors/{doctor}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
         Route::delete('/appointments', [AppointmentController::class, 'destroyAll'])->name('appointments.destroyAll');
     });
+});
+
+Route::fallback(function(){
+    return response()->view('error');
 });

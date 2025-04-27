@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.addEventListener('click', async function(e) {
-        if (e.target && e.target.classList.contains('-doctor')) {
+        if (e.target && e.target.classList.contains('delete-doctor')) {
             const doctorId = e.target.getAttribute("data-id");
             
             if (confirm("Вы уверены, что хотите удалить этого врача?")) {

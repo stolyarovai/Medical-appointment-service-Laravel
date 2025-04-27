@@ -18,6 +18,11 @@ class User extends Authenticatable
         'birth_date',
         'role',
     ];
+
+    protected $casts = [
+        'birth_date' => 'date',
+    ];
+    
     
     protected $hidden = [
         'password',

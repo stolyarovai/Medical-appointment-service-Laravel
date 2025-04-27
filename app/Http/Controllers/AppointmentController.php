@@ -44,7 +44,7 @@ class AppointmentController extends Controller
 
         return response()->json([
             'success' => true,
-            'redirect' => route('dashboard'),
+            'redirect_from' => route('dashboard'),
         ]);
     }
 

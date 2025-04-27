@@ -10,7 +10,6 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::with(['user', 'doctor'])
-            ->orderBy('appointment_date')
             ->orderBy('appointment_time')
             ->get();
 

@@ -34,12 +34,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function validateEmailUniqueness(email, callback) {
-        fetch("../actions/validate.php", {
+        const formData = new FormData();
+        formData.append('email', email);
+        
+        fetch("/validate-email", {
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: "email=" + encodeURIComponent(email),
+            body: formData,
         })
             .then(response => response.json())
             .then(data => {

@@ -12,13 +12,13 @@ class Appointment extends Model
     protected $fillable = [
         'user_id', 
         'doctor_id', 
-        'appointment_date', 
+        'appointment_time', 
         'status',
         'notes'
     ];
 
     protected $casts = [
-        'appointment_date' => 'datetime',
+        'appointment_time' => 'datetime',
     ];
 
     public function user()

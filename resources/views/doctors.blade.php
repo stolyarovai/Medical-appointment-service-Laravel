@@ -27,11 +27,11 @@
             </div>
 
             <div class="form-group">
-                <label for="speciality">Специальность</label>
-                <input type="text" id="speciality" name="speciality"
-                       value="{{ old('speciality') }}" required>
-                <div class="error" id="specialityError">
-                    @error('speciality'){{ $message }}@enderror
+                <label for="specialty">Специальность</label>
+                <input type="text" id="specialty" name="specialty"
+                       value="{{ old('specialty') }}" required>
+                <div class="error" id="specialtyError">
+                    @error('specialty'){{ $message }}@enderror
                 </div>
             </div>
 
